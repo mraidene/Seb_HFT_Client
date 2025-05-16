@@ -6,4 +6,4 @@ To compile main_engine.cpp (on windows), run:
 
 g++ -o main_engine.exe main_engine.cpp -lws2_32 -lmswsock
 
-Note: This does not implement (at least as far as I'm aware) compiler optimmizations such as -O2 yet.
+Note: This does not implement (at least as far as I'm aware) compiler optimizations such as -O2 yet.
