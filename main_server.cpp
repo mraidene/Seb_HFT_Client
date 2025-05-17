@@ -40,7 +40,7 @@ Challenge generate_challenge(std::mt19937& gen, std::uniform_real_distribution<>
 
     // Generate 10 securities
     for (int i = 1; i <= 1000; i++) {
-        char ticker[1000];
+        char ticker[10];
         std::snprintf(ticker, sizeof(ticker), "SEC%04d", i);
         double bid = bid_dist(gen);
         double ask = bid + inc_dist(gen);
