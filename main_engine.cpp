@@ -37,7 +37,7 @@ int trade(int slots, int char_per_slot, std::string name) {
 
         // Initialize Buffer and Related Constants;
         int curr_slot = 0;
-        char* buffer = (char*)malloc(slots * char_per_slot * sizeof(char));
+        char* buffer = (char*)calloc(slots * char_per_slot, sizeof(char));
         if (buffer == nullptr) {
             std::cerr << "Failed to allocate buffer memory!" << std::endl;
             return 1;
@@ -48,7 +48,7 @@ int trade(int slots, int char_per_slot, std::string name) {
 
         // Initialize Output Char* and related constants
         const size_t target_length = 7 * sizeof(char); // This is the size of the targetID that we are looking for (Ex: SEC0001)
-        char* output = (char*)malloc(40);
+        char* output = (char*)malloc(80);
         strcpy(output, "CHALLENGE_RESPONSE "); // Putting the first bit that never changes into the output buffer
 
         // Handling Each Challenge
@@ -91,6 +91,8 @@ int trade(int slots, int char_per_slot, std::string name) {
                 // If a complete line was processed, processing_ptr is advanced to the next line
                 // If a complete line is not processed (meaning an incomplete input / waiting for next fragment)
                 // returns false and doese not advance processing_ptr, thus waiting for the next fragment 
+                // Experiment with changing this to a "handle_fragment()" - add while loop inside of function
+                // to avoid iterative calls to the function!!!!!
                 while (handle_line(processing_ptr, write, best_quotes)){}
             }
 
