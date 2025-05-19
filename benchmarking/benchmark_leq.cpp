@@ -8,7 +8,7 @@
 #include <string>
 #include <iomanip>
 #include <sstream>
-#include "..\\compare_char_ask_a_leq_b.h"
+#include "../compare_char_ask_a_leq_b.h"
 
 using namespace std;
 using namespace chrono;

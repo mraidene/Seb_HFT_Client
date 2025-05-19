@@ -8,24 +8,57 @@
 #include <string>
 #include <iomanip>
 #include <sstream>
-#include "../compare_char_bid_a_geq_b.h"
 
 using namespace std;
 using namespace chrono;
 
-// Conversion-based comparison: copies strings up to '|' and uses atof
+// Conversion-based comparison: changes string using stod and compares
 bool compare_char_bid_a_geq_b_float(const char* a, const char* b) {
-    float fa, fb;
+    return stod(a) >= stod(b);
+}
 
-    auto end_a = strchr(a, '|');
-    auto end_b = strchr(b, '|');
+bool compare_char_bid_a_geq_b(const char* a, const char* b){
+    if (b == nullptr) return true;
 
-    if (!end_a || !end_b) return false; // invalid input
+    // returns True if a >= b
+    const char* int_a = a;
+    const char* int_b = b;
 
-    std::from_chars(a, end_a, fa);
-    std::from_chars(b, end_b, fb);
+    const char* dot_a = a;
+    const char* dot_b = b;
+    while (*dot_a != '.' && *dot_a != '\0') dot_a++;
+    while (*dot_b != '.' && *dot_b != '\0') dot_b++;
 
-    return fa >= fb;
+    // If the int representation of a is longer than the int rep of b, return True
+    // If the int representation of a is shorter than the int rep of b, return False
+    unsigned int len_a = dot_a - int_a;
+    unsigned int len_b = dot_b - int_b;
+
+    if (len_a > len_b) return true;
+    if (len_a < len_b) return false;
+
+    for (int i=0; i< len_a; i++) {
+        if (*int_a > *int_b) return true;
+        if (*int_a < *int_b) return false;
+        int_a++;
+        int_b++;
+    }
+
+    if (*dot_b == '\0') return true;
+    if (*dot_a == '\0') return false;
+    
+    dot_a++;
+    dot_b++;
+
+    while (*dot_a != '\0' && *dot_b != '\0') {
+        if (*dot_a > *dot_b) return true;
+        if (*dot_a < *dot_b) return false;
+        dot_a++;
+        dot_b++;
+    }
+
+    if (*dot_b != '\0') return false;
+    return true;
 }
 
 // Tests with no trailing zeros (exchange-style)
@@ -37,18 +70,18 @@ void run_tests() {
     };
 
     TestCase tests[] = {
-        {"123.45|", "123.46|", false},
-        {"123.45|", "123.44|", true},
-        {"123.5|",  "123.5|",  true},
-        {"999.999|", "1000|",  false},
-        {"1000|",   "999.999|", true},
-        {"500|",    "500|",    true},
-        {"1|","2|", false},
-        {"2|","2|", true},
-        {"2|","1|", true},
-        {"0.1|",    "0.09|",   true},
-        {"0.123|",  "0.1234|", false},
-        {"0.1234|", "0.123|",  true},
+        {"123.45", "123.46", false},
+        {"123.45", "123.44", true},
+        {"123.5",  "123.5",  true},
+        {"999.999", "1000",  false},
+        {"1000",   "999.999", true},
+        {"500",    "500",    true},
+        {"1","2", false},
+        {"2","2", true},
+        {"2","1", true},
+        {"0.1",    "0.09",   true},
+        {"0.123",  "0.1234", false},
+        {"0.1234", "0.123",  true},
     };
 
     cout << "Running test cases:\n";

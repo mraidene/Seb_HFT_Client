@@ -7,8 +7,8 @@ bool compare_char_bid_a_geq_b(const char* a, const char* b){
 
     const char* dot_a = a;
     const char* dot_b = b;
-    while (*dot_a != '.' && *dot_a != '|') dot_a++;
-    while (*dot_b != '.' && *dot_b != '|') dot_b++;
+    while (*dot_a != '.' && *dot_a != '\0') dot_a++;
+    while (*dot_b != '.' && *dot_b != '\0') dot_b++;
 
     // If the int representation of a is longer than the int rep of b, return True
     // If the int representation of a is shorter than the int rep of b, return False
@@ -25,19 +25,19 @@ bool compare_char_bid_a_geq_b(const char* a, const char* b){
         int_b++;
     }
 
-    if (*dot_b == '|') return true;
-    if (*dot_a == '|') return false;
+    if (*dot_b == '\0') return true;
+    if (*dot_a == '\0') return false;
     
     dot_a++;
     dot_b++;
 
-    while (*dot_a != '|' && *dot_b != '|') {
+    while (*dot_a != '\0' && *dot_b != '\0') {
         if (*dot_a > *dot_b) return true;
         if (*dot_a < *dot_b) return false;
         dot_a++;
         dot_b++;
     }
 
-    if (*dot_b != '|') return false;
+    if (*dot_b != '\0') return false;
     return true;
 }

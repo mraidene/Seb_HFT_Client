@@ -93,7 +93,7 @@ int trade(int slots, int char_per_slot, std::string name) {
                 // returns false and doese not advance processing_ptr, thus waiting for the next fragment 
                 // Experiment with changing this to a "handle_fragment()" - add while loop inside of function
                 // to avoid iterative calls to the function!!!!!
-                handle_line(processing_ptr, write, best_quotes);
+                while (handle_line(processing_ptr, write, best_quotes)){}
             }
 
             // Finding components and saving their locations as ptrs - waiting for complete message until processing
