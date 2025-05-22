@@ -3,14 +3,14 @@
 #include <cstring>
 #include <chrono>
 #include <unordered_map>
-#include "add_challenge_id.h"
-#include "add_ticker.h"
-#include "add_bid.h"
-#include "add_ask.h"
-#include "add_trader_name_and_terminate.h"
-#include "initialize_udp_connection.h"
-#include "initialize_tcp_connection.h"
-#include "handle_line.h"
+#include "./include/add_challenge_id.h"
+#include "./include/add_ticker.h"
+#include "./include/add_bid.h"
+#include "./include/add_ask.h"
+#include "./include/add_trader_name_and_terminate.h"
+#include "./include/initialize_udp_connection.h"
+#include "./include/initialize_tcp_connection.h"
+#include "./include/handle_line.h"
 using boost::asio::ip::udp;
 using namespace std;
 using namespace chrono;
@@ -93,7 +93,7 @@ int trade(int slots, int char_per_slot, std::string name) {
                 // returns false and doese not advance processing_ptr, thus waiting for the next fragment 
                 // Experiment with changing this to a "handle_fragment()" - add while loop inside of function
                 // to avoid iterative calls to the function!!!!!
-                while (handle_line(processing_ptr, write, best_quotes)){}
+                handle_line(processing_ptr, write, best_quotes);
             }
 
             // Finding components and saving their locations as ptrs - waiting for complete message until processing
