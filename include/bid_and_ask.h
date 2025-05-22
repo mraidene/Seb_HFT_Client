@@ -1,4 +1,6 @@
+#include <string>
+
 struct BidAndAsk {
-    char* bid = nullptr;
-    char* ask = nullptr;
+    std::string bid = nullptr;
+    std::string ask = nullptr;
 };
